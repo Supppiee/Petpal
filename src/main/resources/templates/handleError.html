@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found</title>
+    <style>
+        :root {
+            --background-gradient-start: #a8edea;
+            --background-gradient-end: #fed6e3;
+            --primary-color: #6acfcf;
+            --primary-hover: #57b4b4;
+            --text-main: #333;
+            --text-secondary: #444;
+            --border-color: #ccc;
+            --container-background: rgba(255, 255, 255, 0.9);
+            --box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--background-gradient-start), var(--background-gradient-end));
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            background-color: var(--container-background);
+            box-shadow: var(--box-shadow);
+            border-radius: 12px;
+            padding: 25px;
+            max-width: 450px;
+            text-align: center;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 60px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: var(--text-secondary);
+            font-size: 20px;
+            margin: 20px 0;
+        }
+
+        .error-message {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 30px 0;
+        }
+
+        a {
+            color: var(--primary-color);
+            font-size: 18px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--primary-hover);
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 6px;
+            margin-top: 20px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        button:hover {
+            background-color: var(--primary-hover);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>404</h1>
+        <p>Oops! The page you're looking for has gone on a vacation!</p>
+        <div class="error-message">Don't worry, it's not lost forever, just temporarily unavailable.</div>
+        <button onclick="window.location.href = '/';">Go Back Home</button>
+    </div>
+</body>
+</html>
