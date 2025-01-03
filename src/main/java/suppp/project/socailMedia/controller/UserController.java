@@ -7,7 +7,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import suppp.project.socailMedia.dto.User;
 import suppp.project.socailMedia.service.UserService;
@@ -44,9 +46,10 @@ public class UserController {
 		return "/otp.html";
 	}
 	
-	@GetMapping("/errors")
-	public String handleError() {
-		return "/handleError.html";
-	}
+	@PostMapping("/verifyOtp")
+	public String verifyOTP(@RequestParam int id, @RequestParam int otp, HttpSession session) {
+		return service.verifyOtp(id, otp, session);
+	}	
+	
 	
 }

@@ -7,9 +7,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import suppp.project.socailMedia.dto.User;
 import suppp.project.socailMedia.helper.AES;
+import suppp.project.socailMedia.helper.EmailSender;
 import suppp.project.socailMedia.repository.UserRepository;
 
 @Service
@@ -17,6 +19,9 @@ public class UserService {
 
 	@Autowired
 	UserRepository repository;
+	
+	@Autowired
+	EmailSender emailSender;
 
 	public String loadRegister(ModelMap map, User user) {
 		map.put("User", user);
@@ -41,6 +46,7 @@ public class UserService {
 		else {
 			user.setPassword(AES.encrypt(user.getPassword()));
 			int otp = new Random().nextInt(100000,1000000);
+			emailSender.sendOTP(otp, user.getEmail(), user.getUserName());
 			System.out.println("OTP : "+otp);
 			user.setOtp(otp);
 			repository.save(user);
@@ -48,4 +54,17 @@ public class UserService {
 		}
 	}
 
+	public String verifyOtp(int id, int otp, HttpSession session) {
+		User user = repository.findById(id).get();
+		if(user.getOtp() == otp){
+			user.setVerified(true);
+			user.setOtp(0);
+			repository.save(user);
+			session.setAttribute("pass", "Account created successfully");
+			return "redirect:/login";
+		}else {
+			session.setAttribute("fail", "Invalid OTP, Try again");
+			return "redirect:/otp/"+user.getId();
+		}
+	}
 }

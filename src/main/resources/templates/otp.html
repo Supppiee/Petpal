@@ -88,6 +88,11 @@
         .back-link:hover {
             text-decoration: underline;
         }
+
+        .message {
+            text-align: center;
+            margin-top: 15px;
+        }
     </style>
 </head>
 <body>
@@ -96,11 +101,16 @@
         <form action="/verifyOtp" method="post">
             <div class="form-group">
                 <label for="otp"></label>
+                <input type="hidden" name="id" th:value="${id}">
                 <input type="text" id="otp" name="otp" required placeholder="Enter OTP">
             </div>
             <button type="submit">Verify OTP</button>
         </form>
         <a href="/resendOtp" class="back-link">Resend OTP</a>
+        <div class="message">
+            <h2 style="color: green;" th:text="${session.pass}"></h2>
+            <h2 style="color: red;" th:text="${session.fail}"></h2>
+        </div>
     </div>
 </body>
 </html>
