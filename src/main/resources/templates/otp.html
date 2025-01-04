@@ -99,6 +99,7 @@
     <div class="container">
         <h2>Enter OTP</h2>
         <form action="/verifyOtp" method="post">
+            <center><p>An OTP has been sent to your email, Please verify..</p></center>
             <div class="form-group">
                 <label for="otp"></label>
                 <input type="hidden" name="id" th:value="${id}">
@@ -106,7 +107,7 @@
             </div>
             <button type="submit">Verify OTP</button>
         </form>
-        <a href="/resendOtp" class="back-link">Resend OTP</a>
+        <a th:href="'/resendOTP/'+${id}" class="back-link">Resend OTP</a>
         <div class="message">
             <h2 style="color: green;" th:text="${session.pass}"></h2>
             <h2 style="color: red;" th:text="${session.fail}"></h2>

@@ -67,4 +67,14 @@ public class UserService {
 			return "redirect:/otp/"+user.getId();
 		}
 	}
+
+	public String resendOTP(int id) {
+		User user = repository.findById(id).get();
+		int otp = new Random().nextInt(100000,1000000);
+		user.setOtp(otp);
+		System.out.println(otp);
+		emailSender.sendOTP(otp, user.getEmail(), user.getUserName());
+		repository.save(user);
+		return "redirect:/otp/"+user.getId();
+	}
 }

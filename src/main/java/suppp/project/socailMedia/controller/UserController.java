@@ -51,5 +51,8 @@ public class UserController {
 		return service.verifyOtp(id, otp, session);
 	}	
 	
-	
+	@GetMapping("/resendOTP/{id}")
+	public String resendOTP(@PathVariable int id) {
+		return service.resendOTP(id);
+	}
 }
