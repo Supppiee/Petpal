@@ -19,10 +19,25 @@ public class UserController {
 	
 	@Autowired
 	UserService service;
-
-	@GetMapping({"/","/login"})
+	
+	@GetMapping("/")
+	public String loadDefault() {
+		return "/default.html";
+	}
+	
+	@GetMapping("/login")
 	public String load() {
 		return "/login.html";
+	}
+	
+	@GetMapping("/contact")
+	public String loadContactUs() {
+		return "/contact.html";
+	}
+	
+	@GetMapping("/errors")
+	public String errors() {
+		return "/handleError.html";
 	}
 	
 	@GetMapping("/register")
@@ -55,4 +70,22 @@ public class UserController {
 	public String resendOTP(@PathVariable int id) {
 		return service.resendOTP(id);
 	}
+	
+
+	@PostMapping("/login")
+	public String login(@RequestParam String userName, @RequestParam String password, HttpSession session) {
+		return service.login(userName, password, session);
+	}
+	
+	@GetMapping("/home")
+	public String loadHome(HttpSession session) {
+		return service.loadHome(session);
+	}
+	
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		return service.logout(session);
+	}
+	
+	
 }

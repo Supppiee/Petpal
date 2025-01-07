@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petpal - Home</title>
+    <style>
+        :root {
+            --background-gradient-start: #a8edea;
+            --background-gradient-end: #fed6e3;
+            --primary-color: #6acfcf;
+            --primary-hover: #57b4b4;
+            --text-main: #222; /* Darker text color for better visibility */
+            --text-secondary: #333; 
+            --border-color: #ccc;
+            --container-background: rgba(255, 255, 255, 0.9);
+            --box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--background-gradient-start), var(--background-gradient-end));
+            color: var(--text-main);
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-hover)); 
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--box-shadow);
+        }
+
+        .logo {
+            font-size: 36px;
+            font-weight: 600; /* Added boldness to logo */
+            color: white;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+        }
+
+        nav ul li {
+            display: inline;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 500; /* Added font weight for better visibility */
+            transition: color 0.3s;
+            padding: 12px 16px;
+        }
+
+        nav ul li a:hover {
+            color: #a8edea;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+        }
+
+        .hero {
+            flex: 1;
+            text-align: center;
+            padding: 50px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, var(--background-gradient-start), var(--background-gradient-end)); /* No image, just gradient */
+            color: var(--text-secondary);
+        }
+
+        .hero h1 {
+            font-size: 64px;
+            font-weight: 700; /* Made the heading bold */
+            margin-bottom: 20px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .hero p:nth-child(2) {
+            font-size: 20px;
+            line-height: 1.8;
+            animation: slideUp 1.5s ease-in-out;
+            max-width: 800px;
+            font-weight: 400; /* Made paragraph text a bit lighter */
+        }
+
+        .hero p:nth-child(3) {
+            font-size: 18px;
+            font-style: italic;
+            max-width: 750px;
+            margin-top: 15px;
+            animation: slideUp 2s ease-in-out;
+            font-weight: 400;
+        }
+
+        .cta {
+            margin-top: 30px;
+        }
+
+        .cta a {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 14px 30px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 600; /* Bold for call-to-action button */
+            transition: background-color 0.3s;
+        }
+
+        .cta a:hover {
+            background-color: var(--primary-hover);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 40px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+            box-shadow: var(--box-shadow);
+        }
+
+        footer p {
+            font-size: 18px;
+            color: white;
+            font-weight: 500; /* Added font weight for footer */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Petpal</div>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="/login">Login</a></li>
+                <li><a href="/contact">Contact Us</a></li>
+                <li><a href="/errors">About Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Welcome to Petpal!</h1>
+        <p>
+            Discover a new way to connect with fellow pet lovers! Share your pet's adventures, 
+            find friends for them, and celebrate the joy of companionship.
+        </p>
+
+        <div class="cta">
+            <a href="#">Get Started</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Petpal. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

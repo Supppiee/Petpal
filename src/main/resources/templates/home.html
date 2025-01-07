@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <!-- Include premade animation library -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --background-gradient-start: #a8edea;
+            --background-gradient-end: #fed6e3;
+            --primary-color: #6acfcf;
+            --primary-hover: #57b4b4;
+            --text-main: #333;
+            --text-secondary: #444;
+            --border-color: #ccc;
+            --container-background: rgba(255, 255, 255, 0.9);
+            --box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--background-gradient-start), var(--background-gradient-end));
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            background-color: var(--container-background);
+            box-shadow: var(--box-shadow);
+            padding: 25px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 18px;
+        }
+
+        nav .logo h1 {
+            margin: 0;
+            color: var(--text-main);
+            font-size: 28px;
+        }
+
+        nav .nav-buttons button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-left: 10px;
+        }
+
+        nav .nav-buttons button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .content {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: var(--container-background);
+            box-shadow: var(--box-shadow);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            animation: animate__animated animate__fadeIn;
+        }
+
+        .content h1 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .content p {
+            font-size: 18px;
+            color: var(--text-secondary);
+        }
+
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <h1>Petpal</h1>
+        </div>
+        <div class="nav-buttons">
+        	<a href="/profile"><button>Profile</button></a>
+        	<a href="/logout"><button>Logout</button></a>
+            
+        </div>
+    </nav>
+
+    <div class="content">
+        <h1>You're all caught up!</h1>
+        <p>There's nothing new to see here right now.</p>
+    </div>
+</body>
+</html>

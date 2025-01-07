@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +12,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column; /* Add column direction to stack elements */
             height: 100vh;
             background: linear-gradient(135deg, #a8edea, #fed6e3);
             color: #333;
@@ -24,6 +25,7 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
             width: 100%;
             max-width: 350px;
+            margin-bottom: 15px; /* Add margin for spacing between form and button */
         }
 
         h2 {
@@ -79,9 +81,36 @@
         a:hover {
             text-decoration: underline;
         }
+
+        .home-button-container {
+            width: 100%;
+            max-width: 350px; /* Match the form width */
+            text-align: center;
+        }
+
+        .home-button-container button {
+            margin-top: 20px; /* Increase space between form and button */
+            width: auto;
+            padding: 12px 20px; /* Larger padding for a bigger button */
+            font-size: 18px; /* Larger font size */
+            background-color: #ff7f50; /* New color (coral) */
+            border-radius: 8px; /* Slightly larger border-radius */
+            transition: background-color 0.3s, transform 0.2s; /* Added transform effect */
+        }
+
+        .home-button-container button:hover {
+            background-color: #ff6347; /* Darker coral on hover */
+            transform: scale(1.05); /* Slightly enlarge on hover */
+        }
     </style>
 </head>
 <body>
+	<div class="message">
+        <h3 class="success-message" th:text="${session.pass}" style="color: green;"></h3>
+        <h3 class="error-message" th:text="${session.fail}" style="color: red;"></h3>
+        <th:block th:text="${@messageRemover.remove()}"></th:block>
+    </div>
+    
     <form action="/login" method="post">
         <h2>Login</h2>
         <div class="form-group">
@@ -95,11 +124,10 @@
         <button type="submit">Login</button>
         <p>Don't have an account? <a href="/register">Register here</a></p>
     </form>
+    <div class="home-button-container">
+        <a href="/">
+            <button>Back to Home</button>
+        </a>
+    </div>
 </body>
 </html>
-
-
-
-
-
-

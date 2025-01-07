@@ -19,7 +19,7 @@ public class UserService {
 
 	@Autowired
 	UserRepository repository;
-	
+
 	@Autowired
 	EmailSender emailSender;
 
@@ -35,46 +35,92 @@ public class UserService {
 		if (repository.existsByEmail(user.getEmail())) {
 			result.rejectValue("email", "error.email", "Email is already in use");
 		}
-		if(repository.existsByMobile(user.getMobile())) {
+		if (repository.existsByMobile(user.getMobile())) {
 			result.rejectValue("mobile", "error.mobile", "Mobile number is already in use");
 		}
-		if(repository.existsByUserName(user.getUserName())) {
+		if (repository.existsByUserName(user.getUserName())) {
 			result.rejectValue("userName", "error.userName", "User name is already in use");
 		}
 		if (result.hasErrors())
 			return "register.html";
 		else {
 			user.setPassword(AES.encrypt(user.getPassword()));
-			int otp = new Random().nextInt(100000,1000000);
+			int otp = new Random().nextInt(100000, 1000000);
 			emailSender.sendOTP(otp, user.getEmail(), user.getUserName());
-			System.out.println("OTP : "+otp);
+			System.out.println("OTP : " + otp);
 			user.setOtp(otp);
 			repository.save(user);
-			return "redirect:/otp/"+user.getId();
+			return "redirect:/otp/" + user.getId();
 		}
 	}
 
 	public String verifyOtp(int id, int otp, HttpSession session) {
 		User user = repository.findById(id).get();
-		if(user.getOtp() == otp){
+		if (user.getOtp() == otp) {
 			user.setVerified(true);
 			user.setOtp(0);
 			repository.save(user);
 			session.setAttribute("pass", "Account created successfully");
 			return "redirect:/login";
-		}else {
+		} else {
 			session.setAttribute("fail", "Invalid OTP, Try again");
-			return "redirect:/otp/"+user.getId();
+			return "redirect:/otp/" + user.getId();
 		}
 	}
 
 	public String resendOTP(int id) {
 		User user = repository.findById(id).get();
-		int otp = new Random().nextInt(100000,1000000);
+		int otp = new Random().nextInt(100000, 1000000);
 		user.setOtp(otp);
 		System.out.println(otp);
 		emailSender.sendOTP(otp, user.getEmail(), user.getUserName());
 		repository.save(user);
-		return "redirect:/otp/"+user.getId();
+		return "redirect:/otp/" + user.getId();
 	}
+
+	public String login(String userName, String password, HttpSession session) {
+		User user = repository.findByUserName(userName);
+		if (user == null) {
+			session.setAttribute("fail", "user not found");
+			return "redirect:/login";
+		} else {
+			if (AES.decrypt(user.getPassword()).equals(password)) {
+				if (user.isVerified()) {
+					session.setAttribute("user", user);
+					session.setAttribute("pass", "Login successfull!");
+					return "redirect:/home";
+				} else {
+					int otp = new Random().nextInt(100000, 1000000);
+					user.setOtp(otp);
+					System.err.println(otp);
+					// emailSender.sendOtp(user.getEmail(), otp, user.getFirstname());
+					repository.save(user);
+					session.setAttribute("pass", "Otp Sent Success, First Verify Email to Login");
+					return "redirect:/otp/" + user.getId();
+				}
+			} else {
+				session.setAttribute("fail", "Incorrect creditionals");
+				return "redirect:/login";
+			}
+		}
+	}
+
+	public String loadHome(HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		if(user != null) {
+			return "/home.html";
+		}else {
+			session.setAttribute("fail", "Invalid session");
+			return "redirect:/login";
+		}
+	}
+
+	public String logout(HttpSession session) {
+		session.removeAttribute("user");
+		session.setAttribute("pass", "Logout successful");
+		return "redirect:/login";
+	}
+
+	
+	
 }
