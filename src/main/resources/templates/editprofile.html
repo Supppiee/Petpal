@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Profile</title>
+    <style>
+        :root {
+            --background-gradient-start: #a8edea;
+            --background-gradient-end: #fed6e3;
+            --primary-color: #6acfcf;
+            --primary-hover: #57b4b4;
+            --text-main: #333;
+            --text-secondary: #444;
+            --border-color: #ccc;
+            --container-background: rgba(255, 255, 255, 0.9);
+            --box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--background-gradient-start), var(--background-gradient-end));
+            color: var(--text-main);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: var(--container-background);
+            box-shadow: var(--box-shadow);
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 900px;
+            width: 100%;
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+            color: var(--text-secondary);
+            width: 100%;
+            text-align: center;
+        }
+
+        .profile-pic-section {
+            flex-basis: 30%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .profile-pic-section img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        form {
+            flex-basis: 65%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        input[type="file"],
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            resize: none;
+            height: 120px;
+        }
+
+        label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-start;
+        }
+
+        button {
+            flex: 1;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .cancel {
+            background-color: #ccc;
+            color: var(--text-main);
+        }
+
+        .cancel:hover {
+            background-color: #bbb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Update Profile</h2>
+        <div class="profile-pic-section">
+            <img th:if="${session.user.imageUrl == null}" src="https://i.pinimg.com/236x/5e/84/0f/5e840f48df09c21cbe58687879e05b0d.jpg" alt="Profile Picture">
+            <img th:if="${session.user.imageUrl}" th:src="${session.user.imageUrl}" alt="Profile Picture">
+        </div>
+        <form action="" method="post" enctype="multipart/form-data">
+            <div>
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" th:value="${session.user.userName}" disabled>
+            </div>
+            <div>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" th:value="${session.user.email}" disabled>
+            </div>
+            <div>
+                <label for="bio">Bio</label>
+                <textarea id="bio" name="bio" placeholder="Short description about you" ></textarea>
+            </div>
+            <div>
+                <label for="image">Change Profile Picture</label>
+                <input type="file" id="image" name="image" >
+            </div>
+            <div class="button-group">
+                <button type="submit">Save Changes</button>
+                <a href="/profile"><button type="button" class="cancel">Cancel</button></a>
+                
+            </div>
+        </form>
+    </div>
+</body>
+</html>

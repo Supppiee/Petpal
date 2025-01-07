@@ -40,8 +40,23 @@ public class User {
 	private int otp;
 	private boolean verified;
 	
+	private String bio;
+	private String imageUrl;
 	
 	
+	
+	public String getBio() {
+		return bio;
+	}
+	public void setBio(String bio) {
+		this.bio = bio;
+	}
+	public String getImageUrl() {
+		return imageUrl;
+	}
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
 	public boolean isVerified() {
 		return verified;
 	}

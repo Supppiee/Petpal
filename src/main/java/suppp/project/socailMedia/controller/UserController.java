@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -87,5 +88,18 @@ public class UserController {
 		return service.logout(session);
 	}
 	
+	@GetMapping("/profile")
+	public String loadProfile(HttpSession session) {
+		return service.loadProfile(session);
+	}
 	
+	@GetMapping("/editProfile")
+	public String loadditProfile(HttpSession session) {
+		return service.loadEditprofile(session);
+	}
+	
+	@PostMapping("/editProfile")
+	public String editProfile(@RequestParam MultipartFile image, @RequestParam String bio, HttpSession session) {
+		return service.editprofile(image, bio, session);
+	}
 }

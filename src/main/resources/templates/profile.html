@@ -1,213 +1,227 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Profile</title>
     <!-- Include premade animation library -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+      rel="stylesheet"
+    />
     <style>
-        :root {
-            --background-gradient-start: #a8edea;
-            --background-gradient-end: #fed6e3;
-            --primary-color: #6acfcf;
-            --primary-hover: #57b4b4;
-            --text-main: #333;
-            --text-secondary: #444;
-            --border-color: #ccc;
-            --container-background: rgba(255, 255, 255, 0.9);
-            --box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        }
+      :root {
+        --background-gradient-start: #a8edea;
+        --background-gradient-end: #fed6e3;
+        --primary-color: #6acfcf;
+        --primary-hover: #57b4b4;
+        --text-main: #333;
+        --text-secondary: #444;
+        --border-color: #ccc;
+        --container-background: rgba(255, 255, 255, 0.9);
+        --box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, var(--background-gradient-start), var(--background-gradient-end));
-            color: var(--text-main);
-            margin: 0;
-            padding: 0;
-        }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(
+          135deg,
+          var(--background-gradient-start),
+          var(--background-gradient-end)
+        );
+        color: var(--text-main);
+        margin: 0;
+        padding: 0;
+      }
 
-        nav {
-            background-color: var(--container-background);
-            box-shadow: var(--box-shadow);
-            padding: 25px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 18px;
-        }
+      nav {
+        background-color: var(--container-background);
+        box-shadow: var(--box-shadow);
+        padding: 25px 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 18px;
+      }
 
-        nav .logo h1 {
-            margin: 0;
-            color: var(--text-main);
-            font-size: 28px;
-        }
+      nav .logo h1 {
+        margin: 0;
+        color: var(--text-main);
+        font-size: 28px;
+      }
 
-        nav .nav-buttons button {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            padding: 12px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            margin-left: 10px;
-        }
+      nav .nav-buttons button {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        padding: 12px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-left: 10px;
+      }
 
+      nav .nav-buttons button:hover {
+        background-color: var(--primary-hover);
+      }
 
-        nav .nav-buttons button:hover {
-            background-color: var(--primary-hover);
-        }
+      .profile-header {
+        display: flex;
+        align-items: center;
+        max-width: 800px;
+        margin: 50px auto 20px auto;
+        padding: 20px;
+        background-color: var(--container-background);
+        box-shadow: var(--box-shadow);
+        border-radius: 12px;
+      }
 
-        .profile-header {
-            display: flex;
-            align-items: center;
-            max-width: 800px;
-            margin: 50px auto 20px auto;
-            padding: 20px;
-            background-color: var(--container-background);
-            box-shadow: var(--box-shadow);
-            border-radius: 12px;
-        }
+      .profile-header img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 20px;
+      }
 
-        .profile-header img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-right: 20px;
-        }
+      .profile-header .info {
+        flex-grow: 1;
+      }
 
-        .profile-header .info {
-            flex-grow: 1;
-        }
+      .profile-header .info h2 {
+        margin: 0;
+        font-size: 24px;
+      }
 
-        .profile-header .info h2 {
-            margin: 0;
-            font-size: 24px;
-        }
+      .profile-header .info p {
+        margin: 5px 0;
+        font-size: 16px;
+        color: var(--text-secondary);
+      }
 
-        .profile-header .info p {
-            margin: 5px 0;
-            font-size: 16px;
-            color: var(--text-secondary);
-        }
+      .profile-header .actions button {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        padding: 10px 15px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
 
-        .profile-header .actions button {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            padding: 10px 15px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
+      .profile-header .actions button:hover {
+        background-color: var(--primary-hover);
+      }
 
-        .profile-header .actions button:hover {
-            background-color: var(--primary-hover);
-        }
+      .stats {
+        display: flex;
+        justify-content: space-around;
+        max-width: 800px;
+        margin: 20px auto;
+        background-color: var(--container-background);
+        padding: 20px;
+        box-shadow: var(--box-shadow);
+        border-radius: 12px;
+      }
 
-        .stats {
-            display: flex;
-            justify-content: space-around;
-            max-width: 800px;
-            margin: 20px auto;
-            background-color: var(--container-background);
-            padding: 20px;
-            box-shadow: var(--box-shadow);
-            border-radius: 12px;
-        }
+      .stats .stat {
+        text-align: center;
+      }
 
-        .stats .stat {
-            text-align: center;
-        }
+      .stats .stat h3 {
+        margin: 0;
+        font-size: 20px;
+        color: var(--text-main);
+      }
 
-        .stats .stat h3 {
-            margin: 0;
-            font-size: 20px;
-            color: var(--text-main);
-        }
+      .stats .stat p {
+        font-size: 16px;
+        color: var(--text-secondary);
+      }
 
-        .stats .stat p {
-            font-size: 16px;
-            color: var(--text-secondary);
-        }
+      .content {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: var(--container-background);
+        box-shadow: var(--box-shadow);
+        border-radius: 12px;
+        text-align: center;
+      }
 
-        .content {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: var(--container-background);
-            box-shadow: var(--box-shadow);
-            border-radius: 12px;
-            text-align: center;
-        }
+      .content h3 {
+        margin: 0 0 20px;
+        font-size: 20px;
+      }
 
-        .content h3 {
-            margin: 0 0 20px;
-            font-size: 20px;
-        }
+      .content button {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        padding: 12px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
 
-        .content button {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            padding: 12px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .content button:hover {
-            background-color: var(--primary-hover);
-        }
+      .content button:hover {
+        background-color: var(--primary-hover);
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <nav>
-        <div class="logo">
-            <h1>Petpal</h1>
-        </div>
-        <div class="nav-buttons">
-            <a href="/home"><button>Home</button></a>
-            <button>Logout</button>
-        </div>
+      <div class="logo">
+        <h1>Petpal</h1>
+      </div>
+      <div class="nav-buttons">
+        <a href="/home"><button>Home</button></a>
+      </div>
     </nav>
 
     <div class="profile-header">
-        <img src="https://via.placeholder.com/120" alt="Profile Picture">
-        <div class="info">
-            <h2>John Doe</h2>
-            <p>john.doe@example.com</p>
-            <p>"Loving pets, sharing memories."</p>
-        </div>
-        <div class="actions">
-            <button>Edit Profile</button>
-        </div>
+      <img
+        th:if="${session.user.imageUrl == null}"
+        src="https://i.pinimg.com/236x/5e/84/0f/5e840f48df09c21cbe58687879e05b0d.jpg"
+        alt="Profile Picture"
+      />
+      <img
+        th:if="${session.user.imageUrl}"
+        th:src="${session.user.imageUrl}"
+        alt="Profile Picture"
+      />
+
+      <div class="info">
+        <h2 th:text="${session.user.userName}"></h2>
+        <p th:text="${session.user.email}"></p>
+        <p th:text="${session.user.bio}"></p>
+      </div>
+      <div class="actions">
+        <a href="/editProfile"><button>Edit Profile</button></a>
+      </div>
     </div>
 
     <div class="stats">
-        <div class="stat">
-            <h3>Posts</h3>
-            <p>23</p>
-        </div>
-        <div class="stat">
-            <h3>Followers</h3>
-            <p>1,254</p>
-        </div>
-        <div class="stat">
-            <h3>Following</h3>
-            <p>180</p>
-        </div>
+      <div class="stat">
+        <h3>Posts</h3>
+        <p>23</p>
+      </div>
+      <div class="stat">
+        <h3>Followers</h3>
+        <p>1,254</p>
+      </div>
+      <div class="stat">
+        <h3>Following</h3>
+        <p>180</p>
+      </div>
     </div>
 
     <div class="content">
-        <h3>Share a post</h3>
-        <button>Create a New Post</button>
+      <h3>Share a post</h3>
+      <button>Create a New Post</button>
     </div>
-    
-</body>
+  </body>
 </html>

@@ -6,12 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import suppp.project.socailMedia.dto.User;
 import suppp.project.socailMedia.helper.AES;
 import suppp.project.socailMedia.helper.EmailSender;
+import suppp.project.socailMedia.helper.cloudinaryHelper;
 import suppp.project.socailMedia.repository.UserRepository;
 
 @Service
@@ -22,6 +24,9 @@ public class UserService {
 
 	@Autowired
 	EmailSender emailSender;
+	
+	@Autowired
+	cloudinaryHelper cloudinaryHelper;
 
 	public String loadRegister(ModelMap map, User user) {
 		map.put("User", user);
@@ -99,7 +104,7 @@ public class UserService {
 					return "redirect:/otp/" + user.getId();
 				}
 			} else {
-				session.setAttribute("fail", "Incorrect creditionals");
+				session.setAttribute("fail", "Incorrect password");
 				return "redirect:/login";
 			}
 		}
@@ -121,6 +126,37 @@ public class UserService {
 		return "redirect:/login";
 	}
 
+	public String loadProfile(HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		if(user != null) {
+			return "/profile.html";
+		}else {
+			session.setAttribute("fail", "Invalid session");
+			return "redirect:/login";
+		}
+	}
 	
-	
+	public String loadEditprofile(HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		if(user != null) {
+			return "/editprofile.html";
+		}else {
+			session.setAttribute("fail", "Invalid session");
+			return "redirect:/login";
+		}
+	}
+
+	public String editprofile(MultipartFile image, String bio, HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		if(user != null) {
+			if(bio != null)
+			user.setBio(bio);
+			user.setImageUrl(cloudinaryHelper.saveImage(image));
+			repository.save(user);
+			return "/profile";
+		}else {
+			session.setAttribute("fail", "Invalid session");
+			return "redirect:/login";
+		}
+	}
 }
