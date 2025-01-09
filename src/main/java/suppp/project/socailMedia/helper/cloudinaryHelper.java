@@ -25,4 +25,15 @@ public class cloudinaryHelper {
 		}
 		return (String) map.get("url");
 	}
+	
+	
+	public String uploadPosts(MultipartFile file) {
+		Cloudinary cloudinary = new Cloudinary(url);
+		Map map = null;
+		try {
+			map = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.asMap("folder", "petpal_posts"));
+		} catch (IOException e) {
+		}
+		return (String) map.get("url");
+	}
 }

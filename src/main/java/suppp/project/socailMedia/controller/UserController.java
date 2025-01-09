@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import suppp.project.socailMedia.dto.Post;
 import suppp.project.socailMedia.dto.User;
 import suppp.project.socailMedia.service.UserService;
 
@@ -89,8 +90,8 @@ public class UserController {
 	}
 	
 	@GetMapping("/profile")
-	public String loadProfile(HttpSession session) {
-		return service.loadProfile(session);
+	public String loadProfile(HttpSession session, ModelMap map) {
+		return service.loadProfile(session, map);
 	}
 	
 	@GetMapping("/editProfile")
@@ -101,5 +102,15 @@ public class UserController {
 	@PostMapping("/editProfile")
 	public String editProfile(@RequestParam MultipartFile image, @RequestParam String bio, HttpSession session) {
 		return service.editprofile(image, bio, session);
+	}
+	
+	@GetMapping("/post")
+	public String postAdd(HttpSession session){
+		return service.postAdd(session);
+	}
+	
+	@PostMapping("/post")
+	public String addPosts(Post post,HttpSession session) {
+		return service.addPosts(post, session);
 	}
 }

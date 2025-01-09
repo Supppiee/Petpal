@@ -1,5 +1,6 @@
 package suppp.project.socailMedia.service;
 
+import java.util.List;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +11,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import suppp.project.socailMedia.dto.Post;
 import suppp.project.socailMedia.dto.User;
 import suppp.project.socailMedia.helper.AES;
 import suppp.project.socailMedia.helper.EmailSender;
 import suppp.project.socailMedia.helper.cloudinaryHelper;
+import suppp.project.socailMedia.repository.PostRepository;
 import suppp.project.socailMedia.repository.UserRepository;
 
 @Service
@@ -27,6 +30,9 @@ public class UserService {
 	
 	@Autowired
 	cloudinaryHelper cloudinaryHelper;
+	
+	@Autowired
+	PostRepository postRepository;
 
 	public String loadRegister(ModelMap map, User user) {
 		map.put("User", user);
@@ -126,10 +132,15 @@ public class UserService {
 		return "redirect:/login";
 	}
 
-	public String loadProfile(HttpSession session) {
+	public String loadProfile(HttpSession session, ModelMap map) {
 		User user = (User) session.getAttribute("user");
 		if(user != null) {
-			return "/profile.html";
+			List<Post> posts = postRepository.findByUser(user);
+			if(!posts.isEmpty()) {
+				map.put("posts", posts);
+				System.err.println(map);	
+			}
+			return "profile.html";
 		}else {
 			session.setAttribute("fail", "Invalid session");
 			return "redirect:/login";
@@ -154,6 +165,30 @@ public class UserService {
 			user.setImageUrl(cloudinaryHelper.saveImage(image));
 			repository.save(user);
 			return "/profile";
+		}else {
+			session.setAttribute("fail", "Invalid session");
+			return "redirect:/login";
+		}
+	}
+
+	public String postAdd( HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		if(user != null) {
+			return "/postUpload.html";
+		}else {
+			session.setAttribute("fail", "Invalid session");
+			return "redirect:/login";
+		}
+	}
+
+	public String addPosts(Post post, HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		if(user != null) {
+			post.setPostUrl(cloudinaryHelper.uploadPosts(post.getImage()));
+			post.setUser(user);
+			postRepository.save(post);
+			session.setAttribute("pass", "Posted successfully");
+			return "redirect:/profile";
 		}else {
 			session.setAttribute("fail", "Invalid session");
 			return "redirect:/login";

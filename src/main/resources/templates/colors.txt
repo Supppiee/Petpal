@@ -153,5 +153,8 @@ This centralizes your theme into variables and reusable styles, making it easier
 
 
 
-
+<div class="user-info">
+					<img th:src="${session.user.imageUrl}" alt="User DP" class="user-dp" />
+					 <span th:text="${session.user.userName}" class="username"></span>
+				</div>
 
