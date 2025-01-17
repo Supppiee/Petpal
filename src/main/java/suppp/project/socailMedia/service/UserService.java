@@ -1,6 +1,9 @@
 package suppp.project.socailMedia.service;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +30,10 @@ public class UserService {
 
 	@Autowired
 	EmailSender emailSender;
-	
+
 	@Autowired
 	cloudinaryHelper cloudinaryHelper;
-	
+
 	@Autowired
 	PostRepository postRepository;
 
@@ -84,7 +87,7 @@ public class UserService {
 		int otp = new Random().nextInt(100000, 1000000);
 		user.setOtp(otp);
 		System.out.println(otp);
-		emailSender.sendOTP(otp, user.getEmail(), user.getUserName());
+		// emailSender.sendOTP(otp, user.getEmail(), user.getUserName());
 		repository.save(user);
 		return "redirect:/otp/" + user.getId();
 	}
@@ -118,9 +121,9 @@ public class UserService {
 
 	public String loadHome(HttpSession session) {
 		User user = (User) session.getAttribute("user");
-		if(user != null) {
+		if (user != null) {
 			return "/home.html";
-		}else {
+		} else {
 			session.setAttribute("fail", "Invalid session");
 			return "redirect:/login";
 		}
@@ -134,24 +137,23 @@ public class UserService {
 
 	public String loadProfile(HttpSession session, ModelMap map) {
 		User user = (User) session.getAttribute("user");
-		if(user != null) {
+		if (user != null) {
 			List<Post> posts = postRepository.findByUser(user);
-			if(!posts.isEmpty()) {
+			if (!posts.isEmpty()) {
 				map.put("posts", posts);
-				System.err.println(map);	
 			}
 			return "profile.html";
-		}else {
+		} else {
 			session.setAttribute("fail", "Invalid session");
 			return "redirect:/login";
 		}
 	}
-	
+
 	public String loadEditprofile(HttpSession session) {
 		User user = (User) session.getAttribute("user");
-		if(user != null) {
+		if (user != null) {
 			return "/editprofile.html";
-		}else {
+		} else {
 			session.setAttribute("fail", "Invalid session");
 			return "redirect:/login";
 		}
@@ -159,23 +161,23 @@ public class UserService {
 
 	public String editprofile(MultipartFile image, String bio, HttpSession session) {
 		User user = (User) session.getAttribute("user");
-		if(user != null) {
-			if(bio != null)
-			user.setBio(bio);
+		if (user != null) {
+			if (bio != null)
+				user.setBio(bio);
 			user.setImageUrl(cloudinaryHelper.saveImage(image));
 			repository.save(user);
 			return "/profile";
-		}else {
+		} else {
 			session.setAttribute("fail", "Invalid session");
 			return "redirect:/login";
 		}
 	}
 
-	public String postAdd( HttpSession session) {
+	public String postAdd(HttpSession session) {
 		User user = (User) session.getAttribute("user");
-		if(user != null) {
+		if (user != null) {
 			return "/postUpload.html";
-		}else {
+		} else {
 			session.setAttribute("fail", "Invalid session");
 			return "redirect:/login";
 		}
@@ -183,15 +185,58 @@ public class UserService {
 
 	public String addPosts(Post post, HttpSession session) {
 		User user = (User) session.getAttribute("user");
-		if(user != null) {
+		if (user != null) {
 			post.setPostUrl(cloudinaryHelper.uploadPosts(post.getImage()));
 			post.setUser(user);
 			postRepository.save(post);
 			session.setAttribute("pass", "Posted successfully");
 			return "redirect:/profile";
-		}else {
+		} else {
 			session.setAttribute("fail", "Invalid session");
 			return "redirect:/login";
 		}
 	}
+
+	public String deletePost(int id, HttpSession session) {
+		Optional<Post> post = postRepository.findById(id);
+		if (post.isPresent()) {
+			postRepository.deleteById(id);
+			session.setAttribute("pass", "Deleted successfully!");
+		}
+		return "redirect:/profile";
+	}
+
+
+
+	public String editPost(int id, HttpSession session, ModelMap map) {
+		User user = (User) session.getAttribute("user");
+		if (user != null) {
+			Post post = postRepository.findById(id).get();
+			map.put("post", post);
+			return "editPost.html";
+		} else {
+			session.setAttribute("fail", "Invalid Session");
+			return "redirect:/login";
+		}
+	}
+	
+	public String updatePost(Post post, HttpSession session) throws IOException {
+		User user = (User) session.getAttribute("user");
+		if (user != null) {
+			if (!post.getImage().isEmpty())
+				post.setPostUrl(cloudinaryHelper.saveImage(post.getImage()));
+			else
+				post.setPostUrl(postRepository.findById(post.getId()).get().getPostUrl());
+			post.setUser(user);
+			postRepository.save(post);
+
+			session.setAttribute("pass", "Updated Success");
+			return "redirect:/profile";
+
+		} else {
+			session.setAttribute("fail", "Invalid Session");
+			return "redirect:/login";
+		}
+	}
+	
 }

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Post</title>
+    <style>
+        :root {
+            --background-gradient-start: #a8edea;
+            --background-gradient-end: #fed6e3;
+            --primary-color: #6acfcf;
+            --primary-hover: #57b4b4;
+            --text-main: #333;
+            --text-secondary: #444;
+            --border-color: #ccc;
+            --container-background: rgba(255, 255, 255, 0.9);
+            --box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--background-gradient-start), var(--background-gradient-end));
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: var(--container-background);
+            box-shadow: var(--box-shadow);
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: var(--text-main);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .user-dp {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+            border: 2px solid var(--primary-color);
+        }
+
+        .username {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--text-secondary);
+        }
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: stretch;
+        }
+
+        .form-group {
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .form-group input[type="file"],
+        .form-group input[type="text"] {
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            width: 100%;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .post-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Update Post</h1>
+        </div>
+        <div class="user-info">
+            <img th:src="${session.user.imageUrl}" alt="User DP" class="user-dp" />
+            <span th:text="${session.user.userName}" class="username">, Wanna edit a post..?</span>
+        </div>
+        <form action="/updatePost" method="post" enctype="multipart/form-data" class="form">
+            <input type="hidden" th:value="${post.id}" name="id">
+            
+            <div class="form-group">
+                <label for="image">Current Image:</label>
+                <img th:src="${post.postUrl}" alt="Post Image" class="post-image">
+                <label for="image">New Image (Optional):</label>
+                <input type="file" id="image" name="image">
+            </div>
+            
+            <div class="form-group">
+                <label for="caption">Caption:</label>
+                <input type="text" id="caption" th:value="${post.caption}" name="caption" required>
+            </div>
+            
+            <button type="submit">Update</button>
+        </form>
+    </div>
+</body>
+</html>

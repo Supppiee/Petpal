@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Post a Post</title>
+<style>
+:root {
+	--background-gradient-start: #a8edea;
+	--background-gradient-end: #fed6e3;
+	--primary-color: #6acfcf;
+	--primary-hover: #57b4b4;
+	--text-main: #333;
+	--text-secondary: #444;
+	--border-color: #ccc;
+	--container-background: rgba(255, 255, 255, 0.9);
+	--box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+body {
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	background: linear-gradient(135deg, var(--background-gradient-start),
+		var(--background-gradient-end));
+	color: var(--text-main);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+	margin: 0;
+}
+
+.container {
+	display: flex;
+	gap: 20px;
+	background-color: var(--container-background);
+	box-shadow: var(--box-shadow);
+	border-radius: 12px;
+	padding: 25px;
+	max-width: 900px;
+	width: 100%;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+	flex: 1;
+}
+
+form input[type="file"], form input[type="text"], form button {
+	padding: 10px;
+	border-radius: 6px;
+	font-size: 16px;
+	border: 1px solid var(--border-color);
+}
+
+form button {
+	background-color: var(--primary-color);
+	color: white;
+	border: none;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+form button:hover {
+	background-color: var(--primary-hover);
+}
+
+.preview {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 15px;
+	border: 1px solid var(--border-color);
+	border-radius: 12px;
+	padding: 20px;
+	background-color: white;
+}
+
+.preview img {
+	width: 200px;
+	height: 200px;
+	object-fit: cover;
+	border-radius: 12px;
+	border: 1px solid var(--border-color);
+}
+
+.preview .caption {
+	font-size: 16px;
+	color: var(--text-secondary);
+	text-align: center;
+}
+
+.buttons {
+	display: flex;
+	gap: 10px;
+	justify-content: flex-end;
+}
+
+.back-button {
+	margin-top: 20px;
+	display: flex;
+	justify-content: center;
+	width: 100%;
+}
+
+.back-button button {
+	background-color: var(--primary-color);
+	color: white;
+	border: none;
+	border-radius: 6px;
+	padding: 14px 40px;
+	font-size: 16px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+.back-button button:hover {
+	background-color: var(--primary-hover);
+}
+</style>
+</head>
+<body>
+	<div class="container">
+		<form id="postForm" method="post" action="/profile/updatePost"
+			enctype="multipart/form-data">
+			<h3>
+				Hey <span th:text="${session.user.userName}"></span>, wanna edit an
+				existing post..?
+			</h3>
+			<label for="imageInput">Select Image:</label> <input type="file"
+				name="image" id="imageInput" accept="image/*"> <label
+				for="captionInput">Caption:</label> <input type="text"
+				name="caption" id="captionInput" placeholder="Write your caption...">
+
+			<div class="buttons">
+				<button type="submit">Update</button>
+				<button type="button" onclick="resetForm()">Cancel</button>
+			</div>
+		</form>
+
+		<div class="preview" id="preview">
+			<img id="previewImage" src="" alt="Image Preview"
+				style="display: none;">
+			<div class="caption" id="previewCaption">Your caption will
+				appear here.</div>
+		</div>
+	</div>
+
+	<div class="back-button">
+		<a href="/profile"><button>Back</button></a>
+	</div>
+
+	<script>
+        const imageInput = document.getElementById('imageInput');
+        const captionInput = document.getElementById('captionInput');
+        const previewImage = document.getElementById('previewImage');
+        const previewCaption = document.getElementById('previewCaption');
+
+        imageInput.addEventListener('change', () => {
+            const file = imageInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    previewImage.src = reader.result;
+                    previewImage.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                previewImage.style.display = 'none';
+                previewImage.src = '';
+            }
+        });
+
+        captionInput.addEventListener('input', () => {
+            previewCaption.textContent = captionInput.value || 'Your caption will appear here.';
+        });
+
+        function resetForm() {
+            document.getElementById('postForm').reset();
+            previewImage.style.display = 'none';
+            previewImage.src = '';
+            previewCaption.textContent = 'caption...';
+        }
+    </script>
+</body>
+</html>

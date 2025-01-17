@@ -186,11 +186,18 @@ nav .nav-buttons button:hover {
 }
 
 .post-image {
-	width: 100%;
-	height: 200px;
-	object-fit: cover;
-	border-radius: 6px;
+	width: 100%; /* Set the width to fill the container */
+	max-width: 500px; /* Optional: Limit the maximum width */
+	height: auto;
+	/* Adjust the height automatically based on aspect ratio */
+	object-fit: cover; /* Ensures the image fits well without distortion */
+	border-radius: 6px; /* Maintain rounded corners */
 	margin-top: 50px;
+	display: block; /* Ensure the image respects block layout */
+	border: 2px solid var(--border-color); /* Frame for the image */
+	padding: 5px; /* Space between image and frame */
+	background-color: white; /* Frame background */
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Frame shadow */
 }
 
 .post-details {
@@ -303,16 +310,16 @@ button:hover {
 	</div>
 
 	<div class="posts-container" th:if="${posts}">
-		<div class="post-card" >
+		<div class="post-card">
 			<div th:each="post:${posts}">
-				<img th:src="${post.postUrl}" alt="Post Image" class="post-image" />
+				<img th:src="${post.postUrl}" alt="Post Image" class="post-image" height="300" />
 				<div class="post-details">
 					<p class="post-caption" th:text="${post.caption}"></p>
 					<p class="post-time" th:text="${post.time}"></p>
 				</div>
 				<div class="post-actions">
-					<button>Edit</button>
-					<button>Delete</button>
+					<a th:href="'/edit/'+${post.id}"><button>Edit</button></a>
+					<a th:href="'/profile/'+${post.id}"><button>Delete</button></a>
 				</div>
 			</div>
 
