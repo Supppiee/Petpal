@@ -114,28 +114,36 @@ nav .nav-buttons button:hover {
 	background-color: var(--primary-hover);
 }
 
-.stats {
+.stats-container {
 	display: flex;
-	justify-content: space-around;
+	justify-content: center;
+	align-items: center;
+	gap: 20px;
 	max-width: 800px;
 	margin: 30px auto;
 	background-color: var(--container-background);
 	padding: 20px;
 	box-shadow: var(--box-shadow);
 	border-radius: 12px;
-}
-
-.stats .stat {
 	text-align: center;
 }
 
-.stats .stat h3 {
-	margin: 0;
-	font-size: 20px;
+.stat-item {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 10px;
+}
+
+.stat-item h3 {
+	margin: 0 0 5px;
+	font-size: 18px;
 	color: var(--text-main);
 }
 
-.stats .stat p {
+.stat-item span {
 	font-size: 16px;
 	color: var(--text-secondary);
 }
@@ -186,18 +194,17 @@ nav .nav-buttons button:hover {
 }
 
 .post-image {
-	width: 100%; /* Set the width to fill the container */
-	max-width: 500px; /* Optional: Limit the maximum width */
+	width: 100%;
+	max-width: 500px;
 	height: auto;
-	/* Adjust the height automatically based on aspect ratio */
-	object-fit: cover; /* Ensures the image fits well without distortion */
-	border-radius: 6px; /* Maintain rounded corners */
+	object-fit: cover;
+	border-radius: 6px;
 	margin-top: 50px;
-	display: block; /* Ensure the image respects block layout */
-	border: 2px solid var(--border-color); /* Frame for the image */
-	padding: 5px; /* Space between image and frame */
-	background-color: white; /* Frame background */
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Frame shadow */
+	display: block;
+	border: 2px solid var(--border-color);
+	padding: 5px;
+	background-color: white;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .post-details {
@@ -294,20 +301,24 @@ button:hover {
 		</div>
 	</div>
 
-	<div class="stats">
-		<div class="stat">
+	<section class="stats-container">
+		<div class="stat-item">
 			<h3>Posts</h3>
-			<p>0</p>
+			<span th:if="${posts==null}">0</span>
+			<span th:if="${posts}" th:text="${posts.size()}"></span>
 		</div>
-		<div class="stat">
-			<h3>Followers</h3>
-			<p>0</p>
+		<div class="stat-item">
+			<a href="/followers"><h3>Followers</h3></a>
+			<span th:text="${session.user.followers.size()}"></span>
 		</div>
-		<div class="stat">
-			<h3>Following</h3>
-			<p>0</p>
+		<div class="stat-item">
+			<a href="/following"><h3>Following</h3></a>
+			<span th:text="${session.user.following.size()}"></span>
 		</div>
-	</div>
+		<div class="stat-item">
+			<a href="/suggestions"><button>Suggestions</button></a>
+		</div>
+	</section>
 
 	<div class="posts-container" th:if="${posts}">
 		<div class="post-card">
@@ -322,7 +333,6 @@ button:hover {
 					<a th:href="'/profile/'+${post.id}"><button>Delete</button></a>
 				</div>
 			</div>
-
 		</div>
 	</div>
 
@@ -330,6 +340,5 @@ button:hover {
 		<h3>Share a post</h3>
 		<a href="/post"><button>Create a New Post</button></a>
 	</div>
-
 </body>
 </html>

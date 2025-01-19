@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+         img{
+            height: 100px;
+        width: 100px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Following</h1>
+
+    <table border="1">
+        <tr th:each="user:${following}">
+            <td><img th:if="${user.imageUrl==null}"
+                src="https://static.vecteezy.com/system/resources/previews/019/879/186/non_2x/user-icon-on-transparent-background-free-png.png"
+                alt="Profile Picture" class="profile-picture">
+            <img th:if="${user.imageUrl}" th:src="${user.imageUrl}" alt="Profile Picture"
+                class="profile-picture">
+        </td>
+        <td th:text="${user.userName}"></td>
+        <td><a href="#"><button>View Profile</button></a></td>
+        <td>
+            <a th:if="${!user.isFollowing()}" th:href="'/follow/'+${user.id}"><button>Follow</button></a>
+            <a th:if="${user.isFollowing()}" href="#"><button>Un-Follow</button></a>
+        </td>
+        </tr>
+    </table>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suggestions</title>
+    <style>
+        :root {
+            --background-gradient-start: #a8edea;
+            --background-gradient-end: #fed6e3;
+            --primary-color: #6acfcf;
+            --primary-hover: #57b4b4;
+            --text-main: #333;
+            --border-color: #ccc;
+            --container-background: rgba(255, 255, 255, 0.9);
+            --box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--background-gradient-start), var(--background-gradient-end));
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 400px;
+            margin-top: 20px;
+            background-color: var(--container-background);
+            border-radius: 12px;
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            padding: 10px;
+        }
+
+        .user-card {
+            display: flex;
+            align-items: center;
+            padding: 10px 5px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .user-card:last-child {
+            border-bottom: none;
+        }
+
+        .profile-picture {
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: var(--box-shadow);
+            margin-right: 15px;
+        }
+
+        .user-details {
+            flex: 1;
+        }
+
+        .username {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--text-main);
+        }
+
+        .actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 5px 10px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Example Loop for User Suggestions -->
+        <div th:each="suggestion:${suggestions}" class="user-card">
+            <img th:if="${suggestion.imageUrl}" th:src="${suggestion.imageUrl}"
+                src="https://static.vecteezy.com/system/resources/previews/019/879/186/non_2x/user-icon-on-transparent-background-free-png.png"
+                alt="Profile Picture" class="profile-picture">
+            <div class="user-details">
+                <span class="username" th:text="${suggestion.userName}">Username</span>
+            </div>
+            <div class="actions">
+                <a href="#"><button>View</button></a>
+                <a th:href="'/follow/'+${suggestion.id}"><button>Follow</button></a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

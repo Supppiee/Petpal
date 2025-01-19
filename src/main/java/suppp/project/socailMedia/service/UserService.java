@@ -60,7 +60,7 @@ public class UserService {
 		else {
 			user.setPassword(AES.encrypt(user.getPassword()));
 			int otp = new Random().nextInt(100000, 1000000);
-			emailSender.sendOTP(otp, user.getEmail(), user.getUserName());
+			//emailSender.sendOTP(otp, user.getEmail(), user.getUserName());
 			System.out.println("OTP : " + otp);
 			user.setOtp(otp);
 			repository.save(user);
@@ -205,8 +205,8 @@ public class UserService {
 		}
 		return "redirect:/profile";
 	}
-
-
+	
+	
 
 	public String editPost(int id, HttpSession session, ModelMap map) {
 		User user = (User) session.getAttribute("user");
@@ -239,4 +239,87 @@ public class UserService {
 		}
 	}
 	
+	public String viewSuggestions(HttpSession session, ModelMap map) {
+		User user = (User) session.getAttribute("user");
+		if (user != null) {
+			List<User> suggestions = repository.findByVerifiedTrue();
+			List<User> usersToRemove = new ArrayList<User>();
+
+			for (User suggestion : suggestions) {
+				if (suggestion.getId() == user.getId()) {
+					usersToRemove.add(suggestion);
+				}
+				for (User followingUser : user.getFollowing()) {
+					if (followingUser.getId() == suggestion.getId()) {
+						usersToRemove.add(suggestion);
+					}
+				}
+			}
+			suggestions.removeAll(usersToRemove);
+			if (suggestions.isEmpty()) {
+				session.setAttribute("fail", "No Suggestions");
+				return "redirect:/profile";
+			} else {
+
+				map.put("suggestions", suggestions);
+				return "suggestions.html";
+			}
+		} else {
+			session.setAttribute("fail", "Invalid Session");
+			return "redirect:/login";
+		}
+	}
+	
+
+	public String followUser(int id, HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		if (user != null) {
+			User folllowedUser = repository.findById(id).get();
+
+			user.getFollowing().add(folllowedUser);
+			folllowedUser.getFollowing().add(user);
+			repository.save(user);
+			repository.save(folllowedUser);
+			session.setAttribute("user", repository.findById(user.getId()).get());
+			return "redirect:/profile";
+		} else {
+			session.setAttribute("fail", "Invalid Session");
+			return "redirect:/login";
+		}
+	}
+	
+	public String getFollowers(HttpSession session, ModelMap map) {
+		User user = (User) session.getAttribute("user");
+		if (user != null) {
+			List<User> followers = user.getFollowers();
+			if (followers.isEmpty()) {
+				session.setAttribute("fail", "No Followers");
+				return "redirect:/profile";
+			} else {
+				map.put("followers", followers);
+				return "followers.html";
+			}
+		} else {
+			session.setAttribute("fail", "Invalid Session");
+			return "redirect:/login";
+		}
+	}
+
+	public String getFollowing(HttpSession session, ModelMap map) {
+		User user = (User) session.getAttribute("user");
+		if (user != null) {
+			List<User> following = user.getFollowing();
+			if (following.isEmpty()) {
+				session.setAttribute("fail", "Not Following Anyone");
+				return "redirect:/profile";
+			} else {
+				map.put("following", following);
+				return "following.html";
+			}
+		} else {
+			session.setAttribute("fail", "Invalid Session");
+			return "redirect:/login";
+		}
+	}
+
 }

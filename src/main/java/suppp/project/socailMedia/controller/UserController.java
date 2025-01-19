@@ -126,5 +126,27 @@ public class UserController {
 	public String updatePost(Post post, HttpSession session) throws Exception {
 		return service.updatePost(post, session);
 	}
+	
+	@GetMapping("/suggestions")
+	public String suggestions(HttpSession session, ModelMap map) {
+		return service.viewSuggestions(session, map);
+	}
+	
+	@GetMapping("/follow/{id}")
+	public String follow(@PathVariable int id, HttpSession session) {
+		return service.followUser(id, session);
+	}
+	
+	@GetMapping("/followers")
+	public String getFollowers(HttpSession session,ModelMap map) {
+		return service.getFollowers(session,map);
+	}
+	
+	@GetMapping("/following")
+	public String getFollowing(HttpSession session,ModelMap map) {
+		return service.getFollowing(session,map);
+	}
+	
+	
 
 }
