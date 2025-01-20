@@ -79,8 +79,8 @@ public class UserController {
 	}
 
 	@GetMapping("/home")
-	public String loadHome(HttpSession session) {
-		return service.loadHome(session);
+	public String loadHome(HttpSession session,ModelMap map) {
+		return service.loadHome(session, map);
 	}
 
 	@GetMapping("/logout")
@@ -155,5 +155,15 @@ public class UserController {
 	@GetMapping("/view-profile/{id}")
 	public String viewProfile(@PathVariable int id,HttpSession session,ModelMap map) {
 		return service.viewProfile(id,session,map);
+	}
+	
+	@GetMapping("/like/{id}")
+	public String likePost(@PathVariable int id,HttpSession session) {
+		return service.likePost(id,session);
+	}
+	
+	@GetMapping("/dislike/{id}")
+	public String dislikePost(@PathVariable int id,HttpSession session) {
+		return service.dislikePost(id,session);
 	}
 }

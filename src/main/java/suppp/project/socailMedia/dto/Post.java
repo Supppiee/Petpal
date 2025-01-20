@@ -1,14 +1,18 @@
 package suppp.project.socailMedia.dto;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Transient;
 
@@ -27,6 +31,29 @@ public class Post {
 
 	@ManyToOne
 	private User user;
+
+	@ManyToMany(fetch = FetchType.EAGER)
+	List<User> likedUsers = new ArrayList<User>();
+	
+	public boolean hasLiked(int id) {
+		for (User likedUser : likedUsers) {
+			if (likedUser.getId() == id) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+
+	public List<User> getLikedUsers() {
+		return likedUsers;
+	}
+
+
+	public void setLikedUsers(List<User> likedUsers) {
+		this.likedUsers = likedUsers;
+	}
+
 
 	public int getId() {
 		return id;

@@ -14,6 +14,8 @@ public interface PostRepository extends JpaRepository<Post, Integer>{
 
 	void save(Optional<Post> post);
 
+	List<Post> findByUserIn(List<User> users);
+
 	
 
 }

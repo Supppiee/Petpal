@@ -30,11 +30,10 @@
         nav {
             background-color: var(--container-background);
             box-shadow: var(--box-shadow);
-            padding: 25px 30px;
+            padding: 20px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 18px;
         }
 
         nav .logo h1 {
@@ -59,14 +58,80 @@
             background-color: var(--primary-hover);
         }
 
+        .post-card {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: var(--container-background);
+            box-shadow: var(--box-shadow);
+            border-radius: 12px;
+            padding: 20px;
+            animation: animate__animated animate__fadeIn;
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .profile-picture {
+            border-radius: 50%;
+            margin-right: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        .post-username {
+            font-weight: bold;
+            color: var(--text-main);
+        }
+
+        .post-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .post-caption {
+            color: var(--text-secondary);
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .post-likes {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .action-button:hover {
+            background-color: var(--primary-hover);
+        }
+
         .content {
             max-width: 600px;
             margin: 50px auto;
+            text-align: center;
             background-color: var(--container-background);
             box-shadow: var(--box-shadow);
             border-radius: 12px;
             padding: 25px;
-            text-align: center;
             animation: animate__animated animate__fadeIn;
         }
 
@@ -79,7 +144,6 @@
             font-size: 18px;
             color: var(--text-secondary);
         }
-
     </style>
 </head>
 <body>
@@ -88,11 +152,32 @@
             <h1>Petpal</h1>
         </div>
         <div class="nav-buttons">
-        	<a href="/profile"><button>Profile</button></a>
-        	<a href="/logout"><button>Logout</button></a>
-            
+            <a href="/profile"><button>Profile</button></a>
+            <a href="/logout"><button>Logout</button></a>
         </div>
     </nav>
+
+    <div th:if="${posts}">
+        <div th:each="post : ${posts}" class="post-card">
+            <div class="post-header">
+                <img th:if="${post.user.imageUrl != null}" height="50" width="50" th:src="${post.user.imageUrl}" class="profile-picture">
+                <img th:if="${post.user.imageUrl == null}" height="50" width="50" src="https://i.pinimg.com/236x/5e/84/0f/5e840f48df09c21cbe58687879e05b0d.jpg" alt="Profile Picture" class="profile-picture">
+                <span class="post-username" th:text="${post.user.userName}"></span>
+            </div>
+            <img class="post-image" th:src="${post.postUrl}">
+            <p class="post-caption" th:text="${post.caption}"></p>
+            <p class="post-likes" th:text="${post.likedUsers.size()} + ' Likes'"></p>
+            <div class="post-actions">
+                <a th:if="${!post.hasLiked(session.user.id)}" th:href="'/like/' + ${post.id}">
+                    <button class="action-button like-button">Like</button>
+                </a>
+                <a th:if="${post.hasLiked(session.user.id)}" th:href="'/dislike/' + ${post.id}">
+                    <button class="action-button like-button">Dislike</button>
+                </a>
+                <button class="action-button comment-button">Comment</button>
+            </div>
+        </div>
+    </div>
 
     <div class="content">
         <h1>You're all caught up!</h1>
