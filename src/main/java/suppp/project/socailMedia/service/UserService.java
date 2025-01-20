@@ -321,5 +321,49 @@ public class UserService {
 			return "redirect:/login";
 		}
 	}
+	
+	public String unfollow(HttpSession session, int id) {
+		User user = (User) session.getAttribute("user");
+		if (user != null) {
+			User user2 = null;
+			for (User user3 : user.getFollowing()) {
+				if (id == user3.getId()) {
+					user2 = user3;
+					break;
+				}
+			}
+			user.getFollowing().remove(user2);
+			repository.save(user);
+			User user3 = null;
+			for (User user4 : user2.getFollowers()) {
+				if (user.getId() == user4.getId()) {
+					user3 = user4;
+					break;
+				}
+			}
+			user2.getFollowers().remove(user3);
+			repository.save(user2);
+			session.setAttribute("user", repository.findById(user.getId()).get());
+			return "redirect:/profile";
+		} else {
+			session.setAttribute("fail", "Invalid Session");
+			return "redirect:/login";
+		}
+	}
+	
+	public String viewProfile(int id, HttpSession session, ModelMap map) {
+		User user = (User) session.getAttribute("user");
+		if (user != null) {
+			User checkedUser = repository.findById(id).get();
+			List<Post> posts = postRepository.findByUser(checkedUser);
+			if (!posts.isEmpty())
+				map.put("posts", posts);
+			map.put("user", checkedUser);
+			return "viewProfile.html";
+		} else {
+			session.setAttribute("fail", "Invalid Session");
+			return "redirect:/login";
+		}
+	}
 
 }

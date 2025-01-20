@@ -147,6 +147,13 @@ public class UserController {
 		return service.getFollowing(session,map);
 	}
 	
+	@GetMapping("/unfollow/{id}")
+	public String unfollow(@PathVariable int id,HttpSession session) {
+		return service.unfollow(session,id);
+	}
 	
-
+	@GetMapping("/view-profile/{id}")
+	public String viewProfile(@PathVariable int id,HttpSession session,ModelMap map) {
+		return service.viewProfile(id,session,map);
+	}
 }

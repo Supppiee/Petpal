@@ -13,7 +13,6 @@
 </head>
 <body>
     <h1>Following</h1>
-
     <table border="1">
         <tr th:each="user:${following}">
             <td><img th:if="${user.imageUrl==null}"
@@ -23,10 +22,10 @@
                 class="profile-picture">
         </td>
         <td th:text="${user.userName}"></td>
-        <td><a href="#"><button>View Profile</button></a></td>
+        <td><a th:href="'/view-profile/'+${user.id}"><button>View Profile</button></a></td>
         <td>
             <a th:if="${!user.isFollowing()}" th:href="'/follow/'+${user.id}"><button>Follow</button></a>
-            <a th:if="${user.isFollowing()}" href="#"><button>Un-Follow</button></a>
+            <a th:if="${user.isFollowing()}" th:href="'/unfollow/'+${user.id}"><button>Un-Follow</button></a>
         </td>
         </tr>
     </table>

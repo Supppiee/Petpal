@@ -107,7 +107,7 @@
                 <span class="username" th:text="${suggestion.userName}">Username</span>
             </div>
             <div class="actions">
-                <a href="#"><button>View</button></a>
+                <a th:href="'/view-profile/'+${suggestion.id}"><button>Visit</button></a>
                 <a th:href="'/follow/'+${suggestion.id}"><button>Follow</button></a>
             </div>
         </div>

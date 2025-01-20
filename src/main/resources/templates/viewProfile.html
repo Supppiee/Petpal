@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>My Profile</title>
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+	rel="stylesheet" />
+<style>
+:root {
+	--background-gradient-start: #a8edea;
+	--background-gradient-end: #fed6e3;
+	--primary-color: #6acfcf;
+	--primary-hover: #57b4b4;
+	--text-main: #333;
+	--text-secondary: #444;
+	--border-color: #ccc;
+	--container-background: rgba(255, 255, 255, 0.9);
+	--box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+body {
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+	background: linear-gradient(135deg, var(--background-gradient-start),
+		var(--background-gradient-end));
+	color: var(--text-main);
+	margin: 0;
+	padding: 0;
+}
+
+nav {
+	background-color: var(--container-background);
+	box-shadow: var(--box-shadow);
+	padding: 20px 30px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 18px;
+}
+
+nav .logo h1 {
+	margin: 0;
+	color: var(--text-main);
+	font-size: 28px;
+}
+
+nav .nav-buttons button {
+	background-color: var(--primary-color);
+	color: white;
+	border: none;
+	border-radius: 6px;
+	padding: 12px 20px;
+	font-size: 16px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+	margin-left: 10px;
+}
+
+nav .nav-buttons button:hover {
+	background-color: var(--primary-hover);
+}
+
+.profile-header {
+	display: flex;
+	align-items: center;
+	max-width: 800px;
+	margin: 40px auto;
+	padding: 20px;
+	background-color: var(--container-background);
+	box-shadow: var(--box-shadow);
+	border-radius: 12px;
+}
+
+.profile-header img {
+	width: 120px;
+	height: 120px;
+	border-radius: 50%;
+	object-fit: cover;
+	margin-right: 20px;
+}
+
+.profile-header .info {
+	flex-grow: 1;
+}
+
+.profile-header .info h2 {
+	margin: 0;
+	font-size: 24px;
+}
+
+.profile-header .info p {
+	margin: 5px 0;
+	font-size: 16px;
+	color: var(--text-secondary);
+}
+
+.profile-header .actions {
+	margin-left: 20px;
+}
+
+.profile-header .actions button {
+	background-color: var(--primary-color);
+	color: white;
+	border: none;
+	border-radius: 6px;
+	padding: 10px 15px;
+	font-size: 14px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+.profile-header .actions button:hover {
+	background-color: var(--primary-hover);
+}
+
+.stats-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 20px;
+	max-width: 800px;
+	margin: 30px auto;
+	background-color: var(--container-background);
+	padding: 20px;
+	box-shadow: var(--box-shadow);
+	border-radius: 12px;
+	text-align: center;
+}
+
+.stat-item {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 10px;
+}
+
+.stat-item h3 {
+	margin: 0 0 5px;
+	font-size: 18px;
+	color: var(--text-main);
+}
+
+.stat-item span {
+	font-size: 16px;
+	color: var(--text-secondary);
+}
+
+.posts-container {
+	max-width: 800px;
+	margin: 30px auto;
+	padding: 20px;
+	background-color: var(--container-background);
+	box-shadow: var(--box-shadow);
+	border-radius: 12px;
+}
+
+.post-card {
+	background-color: var(--container-background);
+	border: 1px solid var(--border-color);
+	border-radius: 12px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	margin-bottom: 20px;
+	padding: 20px;
+	position: relative;
+}
+
+.user-info {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	background: rgba(255, 255, 255, 0.8);
+	border-radius: 6px;
+	padding: 5px 10px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.user-dp {
+	height: 30px;
+	width: 30px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+.username {
+	font-size: 14px;
+	color: var(--text-main);
+	font-weight: bold;
+}
+
+.post-image {
+	width: 100%;
+	max-width: 500px;
+	height: auto;
+	object-fit: cover;
+	border-radius: 6px;
+	margin-top: 50px;
+	display: block;
+	border: 2px solid var(--border-color);
+	padding: 5px;
+	background-color: white;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.post-details {
+	margin-top: 10px;
+}
+
+.post-caption {
+	font-size: 16px;
+	color: var(--text-main);
+	margin-bottom: 10px;
+}
+
+.post-time {
+	font-size: 14px;
+	color: var(--text-secondary);
+}
+
+.post-actions {
+	display: flex;
+	justify-content: flex-start;
+	margin-top: 10px;
+	gap: 10px;
+}
+
+button {
+	background-color: var(--primary-color);
+	color: white;
+	border: none;
+	border-radius: 6px;
+	padding: 10px;
+	font-size: 14px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+button:hover {
+	background-color: var(--primary-hover);
+}
+
+.content {
+	max-width: 800px;
+	margin: 30px auto;
+	padding: 20px;
+	background-color: var(--container-background);
+	box-shadow: var(--box-shadow);
+	border-radius: 12px;
+	text-align: center;
+}
+
+.content h3 {
+	margin: 0 0 20px;
+	font-size: 20px;
+}
+
+.content button {
+	background-color: var(--primary-color);
+	color: white;
+	border: none;
+	border-radius: 6px;
+	padding: 12px 20px;
+	font-size: 16px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+.content button:hover {
+	background-color: var(--primary-hover);
+}
+</style>
+</head>
+<body>
+	<nav>
+		<div class="logo">
+			<h1>Petpal</h1>
+		</div>
+		<div class="nav-buttons">
+			<a href="/home"><button>Home</button></a>
+		</div>
+	</nav>
+
+	<div class="profile-header">
+		<img th:if="${user.imageUrl == null}"
+			src="https://i.pinimg.com/236x/5e/84/0f/5e840f48df09c21cbe58687879e05b0d.jpg"
+			alt="Profile Picture" /> <img th:if="${user.imageUrl}"
+			th:src="${user.imageUrl}" alt="Profile Picture" />
+
+		<div class="info">
+			<h2 th:text="${user.userName}"></h2>
+			<p th:text="${user.bio}"></p>
+            <p><b>Contact : </b><span th:text="${user.email}"></span></p>
+		</div>
+
+	</div>
+
+	<section class="stats-container">
+		<div class="stat-item">
+			<h3>Posts</h3>
+			<span th:if="${posts==null}">0</span>
+			<span th:if="${posts}" th:text="${posts.size()}"></span>
+		</div>
+		<div class="stat-item">
+			<h3>Followers</h3>
+			<span th:text="${user.followers.size()}"></span>
+		</div>
+		<div class="stat-item">
+			<h3>Following</h3>
+			<span th:text="${user.following.size()}"></span>
+		</div>
+	</section>
+
+	<div class="posts-container" th:if="${posts}">
+		<div class="post-card">
+			<div th:each="post:${posts}">
+				<img th:src="${post.postUrl}" alt="Post Image" class="post-image" height="300" />
+				<div class="post-details">
+					<p class="post-caption" th:text="${post.caption}"></p>
+					<p class="post-time" th:text="${post.time}"></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
